@@ -55,7 +55,7 @@ void MultichannelGainPhaseAudioProcessorEditor::resized()
 {
     // sets the position and size of the slider with arguments (x, y, width, height)
     gainSlider.setBounds (40, 30, 20, getHeight() - 60);
-    phaseButton.setBounds(40, getHeight() - 30, 20, 20);
+    phaseButton.setBounds(38, getHeight() - 25, 30, 20);
 }
 
 //==============================================================================
