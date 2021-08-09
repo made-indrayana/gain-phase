@@ -96,9 +96,6 @@ void MultichannelGainPhaseAudioProcessor::prepareToPlay (double sampleRate, int 
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    rawVolume = 1.0;
-    phase = 1;
-    
     previousGain = rawVolume;
 }
 

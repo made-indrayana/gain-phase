@@ -54,8 +54,8 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     //==============================================================================
-    double rawVolume;
-    int phase;
+    double rawVolume = 0.0;
+    int phase = 1.0;
 
 
 private:
