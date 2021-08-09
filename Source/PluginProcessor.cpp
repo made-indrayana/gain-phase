@@ -96,6 +96,10 @@ void MultichannelGainPhaseAudioProcessor::prepareToPlay (double sampleRate, int 
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    rawVolume = 1.0;
+    phase = 1;
+    
+    previousGain = rawVolume;
 }
 
 void MultichannelGainPhaseAudioProcessor::releaseResources()
@@ -154,10 +158,22 @@ void MultichannelGainPhaseAudioProcessor::processBlock (juce::AudioBuffer<float>
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
+        
+        const double currentGain = rawVolume;
+        
+        if(currentGain == previousGain)
+        {
+            buffer.applyGain(currentGain);
+        }
+        else
+        {
+            buffer.applyGainRamp(0, buffer.getNumSamples(), previousGain, currentGain);
+            previousGain = currentGain;
+        }
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            channelData[sample] = buffer.getSample(channel, sample) * rawVolume * phase;
+            channelData[sample] = buffer.getSample(channel, sample) * phase;
         }
     }
 }
