@@ -22,6 +22,7 @@ MultichannelGainPhaseAudioProcessor::MultichannelGainPhaseAudioProcessor()
                        )
 #endif
 {
+    phase = 1;
 }
 
 MultichannelGainPhaseAudioProcessor::~MultichannelGainPhaseAudioProcessor()
@@ -154,7 +155,10 @@ void MultichannelGainPhaseAudioProcessor::processBlock (juce::AudioBuffer<float>
     {
         auto* channelData = buffer.getWritePointer (channel);
 
-        // ..do something to the data...
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+            channelData[sample] = buffer.getSample(channel, sample) * rawVolume * phase;
+        }
     }
 }
 

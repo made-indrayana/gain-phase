@@ -4,7 +4,7 @@
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
               jucerFormatVersion="1" companyName="indrayana" companyCopyright="MIT License"
               companyWebsite="https://indrayana.net" companyEmail="indra@indrayana.net"
-              version="0.1" pluginVST3Category="Tools">
+              version="0.1" pluginVST3Category="Tools" pluginFormats="buildAU,buildVST3">
   <MAINGROUP id="oiW9p7" name="multichannel-gain-phase">
     <GROUP id="{C4D81B3B-F52E-D223-DFDA-9AD3A24BB3B5}" name="Source">
       <FILE id="w381Sv" name="PluginProcessor.cpp" compile="1" resource="0"

@@ -17,14 +17,22 @@ MultichannelGainPhaseAudioProcessorEditor::MultichannelGainPhaseAudioProcessorEd
     // editor's size to whatever you need it to be.
     setSize (200, 200);
     
-    audioSlider.setSliderStyle(juce::Slider::LinearBarVertical);
-    audioSlider.setRange(0.0, 1.0);
-    audioSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
-    audioSlider.setPopupDisplayEnabled(true, false, this);
-    audioSlider.setTextValueSuffix ("Volume");
-    audioSlider.setValue(1.0);
+    gainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
+    gainSlider.setRange(0.0, 1.0);
+    gainSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
+    gainSlider.setPopupDisplayEnabled(true, false, this);
+    gainSlider.setTextValueSuffix ("Volume");
+    gainSlider.setValue(1.0);
     
-    addAndMakeVisible(&audioSlider);
+    phaseButton.setToggleState(false, 0);
+    
+    addAndMakeVisible(&gainSlider);
+    addAndMakeVisible(&phaseButton);
+    
+    // add the listener to the slider
+    gainSlider.addListener(this);
+    phaseButton.addListener(this);
+    
     
 }
 
@@ -40,11 +48,34 @@ void MultichannelGainPhaseAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Gain Phase", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText ("Gain & Phase", 0, 0, getWidth(), 30, juce::Justification::centred, 1);
 }
 
 void MultichannelGainPhaseAudioProcessorEditor::resized()
 {
     // sets the position and size of the slider with arguments (x, y, width, height)
-    audioSlider.setBounds (40, 30, 20, getHeight() - 60);
+    gainSlider.setBounds (40, 30, 20, getHeight() - 60);
+    phaseButton.setBounds(40, getHeight() - 30, 20, 20);
+}
+
+//==============================================================================
+void MultichannelGainPhaseAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
+{
+    if(slider == &gainSlider)
+    {
+        audioProcessor.rawVolume = gainSlider.getValue();
+    }
+}
+
+void MultichannelGainPhaseAudioProcessorEditor::buttonClicked(juce::Button* button)
+{
+    if(button == &phaseButton)
+    {
+        if(!button->getToggleState())
+            audioProcessor.phase = 1;
+        else audioProcessor.phase = -1;
+    }}
+
+void MultichannelGainPhaseAudioProcessorEditor::buttonStateChanged(juce::Button* button)
+{
 }
